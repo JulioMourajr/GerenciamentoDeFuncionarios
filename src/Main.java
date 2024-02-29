@@ -21,36 +21,49 @@ public class Main {
         funcionario.add(novoFuncionario);
     }
 
-    public static void removeFuncionario(Scanner func) {
+    public static void removerFuncionario(Funcionario func) {
         funcionario.remove(func);
     }
     public static void main(String[] args) {
         Scanner leitor = new Scanner(System.in);
         String texto;
         String opcao;
-        System.out.println("Bem vindo ao sistema de gerenciamento de funcionários!");
-        do{
+
+        System.out.println("Bem vindo ao sistema de gerenciamento de funcionários");
             texto = "Digite 1 para adicionar um novo funcionário \n " +
                     "Digite 2 para remover um funcionário \n ou 3 para consultar" +
-                    " todos os funcionários ou (digite n para parar" ;
+                    " todos os funcionários ou digite n para parar" +
+                    "\n";
             System.out.println(texto);
             opcao = leitor.nextLine();
-            if(leitor.nextLine().equals("n")){
-                break;
+            while (!opcao.equals("n")) {
+                if (opcao.equals("1")) {
+                    System.out.println("Adicionando um novo funcionário");
+                    addFuncionario(leitor);
+                } else if (opcao.equals("2")) {
+                    System.out.println("Qual é o nome do funcionário que deseja remover? ");
+                    String nome = leitor.nextLine();
+                    for (int i = 0; i < funcionario.size(); i++) {
+                        if (funcionario.get(i).getNome().equals(nome)) {
+                            removerFuncionario(funcionario.get(i));
+                            System.out.println("Funcionario removido com sucesso!");
+                        }
+                    }
+
+                } else if (opcao.equals("3")) {
+                    for (Funcionario func : funcionario) {
+                        System.out.println("Funcionário:");
+                        System.out.println(func);
+                    }
+                }
+                texto = " E agora o que quer fazer? " +
+                        " 1 para adicionar um novo funcionário \n " +
+                        " 2 para remover um funcionário" +
+                        " \n 3 para consultar" +
+                        " \n digite n para parar";
+                System.out.println(texto);
+                opcao = leitor.nextLine();
             }
-        }
-        while(!opcao.equals("1") && !opcao.equals("2") && !opcao.equals("3"));
-        if (opcao.equals("1")) {
-            System.out.println("Adicionando um novo funcionário");
-            addFuncionario(leitor);
-        } else if (opcao.equals("2")) {
-            System.out.println("Removendo um funcionário");
-            removeFuncionario(leitor);
-        } else if (opcao.equals("3")) {
-            for (Funcionario func : funcionario) {
-                System.out.println("Funcionário: ");
-                System.out.println(func);
-            }
-        }
+        System.out.println("Obrigado por utilizar o sistema de gerenciamento de funcionários!");
     }
 }
